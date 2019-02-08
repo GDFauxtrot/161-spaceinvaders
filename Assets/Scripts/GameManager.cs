@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public UnityEvent gameOverEvent;
+
     private int score;
     private int lives;
 
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void GameOver() //instantiate game over UI & pause time
     {
-
+        gameOverEvent.Invoke();
     }
 
     public void ResetScoreAndLives()
