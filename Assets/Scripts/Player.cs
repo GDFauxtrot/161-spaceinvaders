@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     public float speed;
     float horizInput;
 
@@ -15,9 +18,12 @@ public class Player : MonoBehaviour
     public GameObject projectilePrefab;
     public Rigidbody2D rigidbody;
 
+    public UnityEvent PlayerDeath;
+
     void Awake()
     {
         canFire = true;
+        Instance = this;
     }
 
     void Start()
@@ -60,6 +66,8 @@ public class Player : MonoBehaviour
                 GameManager.Instance.KillPlayer();
             }
         }
+        PlayerDeath.Invoke();
+
     }
 
     /// <summary>
