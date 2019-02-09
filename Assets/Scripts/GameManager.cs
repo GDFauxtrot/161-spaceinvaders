@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public UnityEvent gameOverEvent;
 
     private int score;
     private int lives;
@@ -24,12 +27,25 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        Player.Instance.PlayerDeath.AddListener(KillPlayer);
+
         ResetScoreAndLives();
     }
+
 
     public void KillPlayer()
     {
         Debug.Log("Player ded");
+        lives--;
+        if(lives == 0)
+        {
+            GameOver();
+        } 
+    }
+
+    void GameOver() //instantiate game over UI & pause time
+    {
+        gameOverEvent.Invoke();
     }
 
     public void ResetScoreAndLives()
