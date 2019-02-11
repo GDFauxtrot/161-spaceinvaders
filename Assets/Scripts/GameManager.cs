@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -27,9 +28,12 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        Player.Instance.PlayerDeath.AddListener(KillPlayer);
-
         ResetScoreAndLives();
+    }
+
+    private void Start()
+    {
+        Player.Instance.PlayerDeath.AddListener(KillPlayer); 
     }
 
 
@@ -58,4 +62,6 @@ public class GameManager : MonoBehaviour
     {
         score += newPoints;
     }
+
+    
 }
