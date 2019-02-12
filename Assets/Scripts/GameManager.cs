@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         Player.Instance.PlayerDeath.AddListener(KillPlayer);
         GameObject.FindGameObjectWithTag("EnemyParentObject").GetComponent<UnityEvent>().AddListener(GameOver); //calling this function returns null and prevents ResetScoreAndLives() from running. The Debug log says it isn't referencing an instance of the object and is thus
                                                                                                                     //a null reference
+                                                                                                                    //if I try changing EnemyParent to an Instance, it no longer causes a null, but the gameOverEvent still doesn't function properly
         
 
         ResetScoreAndLives();
