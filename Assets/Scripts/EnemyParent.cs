@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class EnemyParent : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class EnemyParent : MonoBehaviour
     GameObject[,] enemies = new GameObject[11, 5];
 
     Coroutine animCoroutine;
+
+    public UnityEvent EnemiesAtBottomWall;
 
     void Awake()
     {
@@ -79,6 +83,15 @@ public class EnemyParent : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("BottomWall"))
+        {
+            EnemiesAtBottomWall.Invoke();
+        }
+    }
+
     /// <summary>
     /// Call this function from an Enemy script when callbacks/box needs resizing
     /// </summary>

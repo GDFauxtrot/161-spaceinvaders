@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Player.Instance.PlayerDeath.AddListener(KillPlayer); 
+        Player.Instance.PlayerDeath.AddListener(KillPlayer);
+        GameObject.FindGameObjectWithTag("EnemyParentObject").GetComponent<UnityEvent>().AddListener(GameOver);
+        
 
         ResetScoreAndLives();
     }
