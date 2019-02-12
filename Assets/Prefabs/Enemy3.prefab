@@ -122,6 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 5869942656724910848, guid: 84c831a89f7b1d14181af97c2ee8bcf6,
     type: 3}
+  projectilePrefab: {fileID: 1258319226415349151, guid: 280ba5b2d9ee0cf458bca5466c4115ec,
+    type: 3}
   points: 40
 --- !u!114 &2899882891569751491
 MonoBehaviour:
