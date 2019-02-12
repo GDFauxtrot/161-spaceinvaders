@@ -9,10 +9,11 @@ public class EnemyParent : MonoBehaviour
     public BoxCollider2D box;
     public Rigidbody2D rigidbody;
     bool movingRight;
-    bool HitWall = false;
+    bool hitWall = false;
     public float speed;
-
+    float shootingTimer;
     public GameObject enemyType1, enemyType2, enemyType3;
+    int min, max, enemiesLeft;
 
     GameObject[,] enemies = new GameObject[11, 5];
 
@@ -31,19 +32,29 @@ public class EnemyParent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         Vector2 dir = movingRight ? Vector2.right : Vector2.left;
-        if (HitWall)
+        if (hitWall)
         {
             dir = dir + Vector2.down*3;
-            HitWall = false;
+            hitWall = false;
         }
         rigidbody.MovePosition(transform.position + (Vector3)(speed * dir * Time.deltaTime));
+        shootingTimer -= Time.deltaTime;
+        if (shootingTimer <= 0)
+        {
+            ShootProjectile();
+            StartTimer();
+        }
+
+
+
     }
 
     private IEnumerator AnimMovingCoroutine()
@@ -66,9 +77,31 @@ public class EnemyParent : MonoBehaviour
     {
         movingRight = !movingRight;
         Vector2 dir = Vector2.down;
-        HitWall = true;
+        hitWall = true;
     }
 
+    public void StartTimer()
+    {
+        shootingTimer = 1.0f + Random.Range(0.0f, 1.0f);
+    }
+
+    public void ShootProjectile()
+    {
+        GameObject bottomEnemy = null;
+        int column = Random.Range(min, max + 1);
+        for (int y = 0; y< 5; ++y)
+        {
+            if (enemies[column, y])
+                bottomEnemy = enemies[column, y];
+        }
+        if (bottomEnemy != null)
+        {
+            Enemy botEnemy = bottomEnemy.GetComponent<Enemy>();
+            botEnemy.FireProjectile();
+        }
+
+
+    }
     /// <summary>
     /// Spawns all the enemies under EnemyParent and destroys any previous ones.
     /// </summary>
@@ -93,6 +126,9 @@ public class EnemyParent : MonoBehaviour
                 enemies[x, y] = enemy;
             }
         }
+        min = 0;
+        max = 11;
+        enemiesLeft = 55;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -109,6 +145,7 @@ public class EnemyParent : MonoBehaviour
     public void ShipDestroyed()
     {
         // Calculate new box in case a column has been destroyed
+        enemiesLeft--;
         Vector2 min, max;
         
     }
