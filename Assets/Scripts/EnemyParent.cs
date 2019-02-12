@@ -9,7 +9,7 @@ public class EnemyParent : MonoBehaviour
     public BoxCollider2D box;
     public Rigidbody2D rigidbody;
     bool movingRight;
-
+    bool HitWall = false;
     public float speed;
 
     public GameObject enemyType1, enemyType2, enemyType3;
@@ -38,7 +38,11 @@ public class EnemyParent : MonoBehaviour
     void Update()
     {
         Vector2 dir = movingRight ? Vector2.right : Vector2.left;
-
+        if (HitWall)
+        {
+            dir = dir + Vector2.down*3;
+            HitWall = false;
+        }
         rigidbody.MovePosition(transform.position + (Vector3)(speed * dir * Time.deltaTime));
     }
 
@@ -56,6 +60,13 @@ public class EnemyParent : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f / (speed <= 0 ? 0.0000001f : speed));
         }
+    }
+
+    public void ChangeDirection()
+    {
+        movingRight = !movingRight;
+        Vector2 dir = Vector2.down;
+        HitWall = true;
     }
 
     /// <summary>
