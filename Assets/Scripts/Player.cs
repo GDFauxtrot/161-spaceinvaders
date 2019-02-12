@@ -33,8 +33,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        #region Pause
+
+        if (Input.GetButtonDown("Cancel") && !isDead)
+        {
+            GameManager.Instance.ToggleGamePause();
+        }
+
+        #endregion
+
         #region Movement
-        
+
         horizInput = Input.GetAxisRaw("Horizontal");
         rigidbody.MovePosition(rigidbody.position + Vector2.right * horizInput * speed * Time.deltaTime);
 
@@ -51,7 +60,6 @@ public class Player : MonoBehaviour
         }
 
         #endregion
-
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -64,10 +72,9 @@ public class Player : MonoBehaviour
             if (projectile && projectile.isEnemyProjectile)
             {
                 GameManager.Instance.KillPlayer();
+                PlayerDeath.Invoke();
             }
         }
-        PlayerDeath.Invoke();
-
     }
 
     /// <summary>

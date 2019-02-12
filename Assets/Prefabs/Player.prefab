@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cbcceaf66c958934d952d685039094af, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,11 +95,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  canFire: 0
-  firePoint: {fileID: 0}
   projectilePrefab: {fileID: 1258319226415349151, guid: ca0273d5caf5d7b468b96c5d8328cce4,
     type: 3}
   rigidbody: {fileID: 3226300493282413263}
+  PlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!50 &3226300493282413263
 Rigidbody2D:
   serializedVersion: 4

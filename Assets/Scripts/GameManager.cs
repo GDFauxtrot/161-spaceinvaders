@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -17,6 +16,11 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized]
     public Player player;
 
+    [System.NonSerialized]
+    public InGameCanvas inGameCanvas;
+
+    public bool isGamePaused;
+
     void Awake()
     {
         // Singleton pattern -- publically accessible Instance of GameManager that does not get destroyed
@@ -27,15 +31,14 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
-
-        ResetScoreAndLives();
     }
 
     private void Start()
     {
         Player.Instance.PlayerDeath.AddListener(KillPlayer); 
-    }
 
+        ResetScoreAndLives();
+    }
 
     public void KillPlayer()
     {
@@ -47,7 +50,7 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    void GameOver() //instantiate game over UI & pause time
+    void GameOver()
     {
         gameOverEvent.Invoke();
     }
@@ -56,12 +59,30 @@ public class GameManager : MonoBehaviour
     {
         lives = 3;
         score = 0;
+
+        inGameCanvas.SetScoreAndLives(score, lives);
+    }
+
+    public void AddPlayerLife()
+    {
+        lives++;
+        inGameCanvas.SetPlayerLifeCount(lives);
     }
 
     public void AddScore(int newPoints)
     {
         score += newPoints;
+        inGameCanvas.SetScoreValue(score);
     }
 
-    
+    public void ToggleGamePause()
+    {
+        isGamePaused = !isGamePaused;
+
+        Time.timeScale = isGamePaused ? 0 : 1;
+
+        Cursor.visible = isGamePaused;
+
+        inGameCanvas.ShowPauseMenu(isGamePaused);
+    }
 }
