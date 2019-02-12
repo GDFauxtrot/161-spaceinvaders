@@ -11,7 +11,7 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.Instance.gameOverEvent.AddListener(setGameOver);
     }
 
     // Update is called once per frame
@@ -21,6 +21,11 @@ public class GameOver : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
         }
+    }
+
+    private void setGameOver()
+    {
+        isGameOver = true;
     }
 
     public void GoToMainMenu()
