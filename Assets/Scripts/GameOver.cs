@@ -26,4 +26,9 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenuScene");
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("JoeScene"); //change on the final push
+    }
 }
