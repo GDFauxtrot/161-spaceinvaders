@@ -51,8 +51,21 @@ public class InGameCanvas : MonoBehaviour
         SetPlayerLifeCount(lives);
     }
 
+    /// <summary>
+    /// Toggles pause menu visibility.
+    /// </summary>
     public void ShowPauseMenu(bool show)
     {
         pauseMenu.SetActive(show);
+    }
+
+    public void Button_PauseContinuePressed()
+    {
+        GameManager.Instance.ToggleGamePause();
+    }
+
+    public void Button_PauseQuitPressed()
+    {
+        Application.Quit(0);
     }
 }
