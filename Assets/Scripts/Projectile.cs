@@ -17,7 +17,10 @@ public class Projectile : MonoBehaviour
 
     void OnDestroy()
     {
-        Player player = GameManager.Instance.player;
-        player.EnableFire();
+        if (!isEnemyProjectile)
+        {
+            Player player = GameManager.Instance.player;
+            player.EnableFire();
+        }
     }
 }
