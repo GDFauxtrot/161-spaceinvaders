@@ -12,8 +12,8 @@ public class EnemyParent : MonoBehaviour
     bool hitWall = false;
     public float speed;
     float shootingTimer;
-    public GameObject enemyType1, enemyType2, enemyType3;
-    int min, max, enemiesLeft;
+    public GameObject enemyType1, enemyType2, enemyType3, gameManager;
+    int min, max, enemiesLeft, level;
 
     GameObject[,] enemies = new GameObject[11, 5];
 
@@ -51,7 +51,15 @@ public class EnemyParent : MonoBehaviour
         {
             ShootProjectile();
             StartTimer();
+            speed += 0.05f;
         }
+        if (enemiesLeft == 0)
+        {
+            PopulateEnemies();
+            GameManager currManager = gameManager.GetComponent<GameManager>();
+            currManager.AddPlayerLife();
+        }
+
 
 
 
@@ -111,7 +119,7 @@ public class EnemyParent : MonoBehaviour
         {
             Destroy(enemy);
         }
-        
+        level += 1;
         for(int y = 0; y < 5; ++y)
         {
             for (int x = 0; x < 11; ++x)
@@ -121,7 +129,7 @@ public class EnemyParent : MonoBehaviour
 
                 enemy.transform.SetParent(gameObject.transform);
 
-                enemy.transform.localPosition = new Vector3(x - 5, 2 - y, 0);
+                enemy.transform.localPosition = new Vector3(x - 5, 2 - (y + level *.1f), 0);
 
                 enemies[x, y] = enemy;
             }
