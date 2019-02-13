@@ -11,9 +11,16 @@ public class EnemyParent : MonoBehaviour
     bool movingRight;
     bool hitWall = false;
     public float speed;
-    float shootingTimer, timerBase;
-    public GameObject enemyType1, enemyType2, enemyType3, gameManager;
-    int min, max, enemiesLeft, level;
+    public float timer;
+    public float speedAdd, timerSubtract;
+    public float speedAddOnKill, timerSubtractOnKill;
+    public float yMovementWallHit;
+    float shootingTimer;
+    public GameObject enemyType1, enemyType2, enemyType3;
+    int min, max, enemiesLeft;
+
+    Vector3 startPos;
+    float startSpeed, startTimer;
 
     GameObject[,] enemies = new GameObject[11, 5];
 
@@ -21,8 +28,14 @@ public class EnemyParent : MonoBehaviour
 
     public UnityEvent EnemiesAtBottomWall;
 
+    public bool debugKillThemAll;
+
     void Awake()
     {
+        startPos = transform.position;
+        startSpeed = speed;
+        startTimer = timer;
+
         PopulateEnemies();
         movingRight = true;
 
@@ -32,7 +45,6 @@ public class EnemyParent : MonoBehaviour
     void Start()
     {
         GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
-        timerBase = 1.0f;
         StartTimer();
     }
 
@@ -52,14 +64,34 @@ public class EnemyParent : MonoBehaviour
         {
             ShootProjectile();
             StartTimer();
-            speed += 0.05f;
-            timerBase -= .005f;
         }
         if (enemiesLeft == 0)
         {
+            // WIN! Reset enemies and values
             PopulateEnemies();
-            GameManager currManager = gameManager.GetComponent<GameManager>();
-            currManager.AddPlayerLife();
+            GameManager.Instance.AddPlayerLife();
+
+            // Modify start speed so the pace picks up each round
+            startSpeed += speedAdd;
+            startTimer -= timerSubtract;
+
+            // Set speed and timer to "initial" values
+            speed = startSpeed;
+            timer = startTimer;
+        }
+
+        if (debugKillThemAll)
+        {
+            debugKillThemAll = false;
+
+            foreach (GameObject go in enemies)
+            {
+                Enemy e = go.GetComponent<Enemy>();
+                if (e)
+                {
+                    e.DestroyShip();
+                }
+            }
         }
     }
 
@@ -114,7 +146,7 @@ public class EnemyParent : MonoBehaviour
 
     public void StartTimer()
     {
-        shootingTimer = timerBase + Random.Range(0.0f, 1.0f);
+        shootingTimer = timer + Random.Range(0.0f, 1.0f);
     }
 
     public void ShootProjectile()
@@ -143,10 +175,9 @@ public class EnemyParent : MonoBehaviour
         {
             Destroy(enemy);
         }
-        level += 1;
-        this.transform.position = new Vector3(0, 2 - level * .1f, 0);
-        speed = 0.5f;
-        timerBase = 1.0f;
+
+        transform.position = startPos;
+
         for(int y = 0; y < 5; ++y)
         {
             for (int x = 0; x < 11; ++x)
@@ -161,11 +192,20 @@ public class EnemyParent : MonoBehaviour
                 enemies[x, y] = enemy;
             }
         }
+
         min = 0;
         max = 11;
         enemiesLeft = 55;
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.otherCollider.gameObject == gameObject && col.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - yMovementWallHit, transform.position.z);
+            ChangeDirection();
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("BottomWall"))
@@ -177,11 +217,32 @@ public class EnemyParent : MonoBehaviour
     /// <summary>
     /// Call this function from an Enemy script when callbacks/box needs resizing
     /// </summary>
-    public void ShipDestroyed()
+    public async void ShipDestroyed()
     {
-        // Calculate new box in case a column has been destroyed
+        // JANK FIX - wait a frame before resizing and whatnot
+        await Task.Delay((int)(Time.deltaTime * 1000));
+
         enemiesLeft--;
+
+        speed += speedAddOnKill;
+        timer -= timerSubtractOnKill;
+
+        Bounds newBounds = new Bounds();
+
         Vector2 min, max;
-        
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy)
+            {
+                newBounds.Encapsulate(enemy.GetComponent<BoxCollider2D>().bounds);
+            }
+        }
+
+        GetComponent<BoxCollider2D>().offset = newBounds.center - transform.position;
+        GetComponent<BoxCollider2D>().size = newBounds.size;
+
+
+        // Calculate new box in case a column has been destroyed
+        //
     }
 }

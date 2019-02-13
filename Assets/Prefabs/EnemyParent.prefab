@@ -48,6 +48,12 @@ MonoBehaviour:
   box: {fileID: 2421561081244058842}
   rigidbody: {fileID: 8664299314103453528}
   speed: 0.5
+  timer: 1
+  speedAdd: 0.15
+  timerSubtract: 0.05
+  speedAddOnKill: 0.02
+  timerSubtractOnKill: 0.01
+  yMovementWallHit: 0.5
   enemyType1: {fileID: 3992061588900674785, guid: a0e505da6067b2a4d8173f623626bfd9,
     type: 3}
   enemyType2: {fileID: 1770696857583581217, guid: bf5806766e0558045ba8886060fe6881,

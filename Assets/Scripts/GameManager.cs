@@ -11,12 +11,8 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent gameOverEvent;
 
-    public GameObject ufoPrefab;
-
     private int score;
     private int lives;
-
-    float spawnUFOTimer = 10.0f;
 
     [System.NonSerialized]
     public Player player;
@@ -25,6 +21,8 @@ public class GameManager : MonoBehaviour
     public InGameCanvas inGameCanvas;
 
     public bool isGamePaused;
+
+    public float enemySpeedIncrease, enemyFireRateDecrease;
 
     void Awake()
     {
@@ -42,33 +40,6 @@ public class GameManager : MonoBehaviour
     {
         player.playerDeathEvent.AddListener(KillPlayer);
         ResetScoreAndLives();
-    }
-
-    void Update()
-    {
-        spawnUFOTimer -= Time.deltaTime;
-        if (spawnUFOTimer <= 0)
-        {
-            GameObject oneUFO = Instantiate(ufoPrefab);
-            UFO ufoScript = oneUFO.GetComponent<UFO>();
-            int direction = Random.Range(0, 1);
-            if (direction == 0)
-            {
-                oneUFO.transform.position = new Vector3(8.5f, 5.0f, 0);
-                ufoScript.SetDirection(false);
-            }
-            else
-            {
-                oneUFO.transform.position = new Vector3(-8.5f, 5.0f, 0);
-                ufoScript.SetDirection(true);
-            }
-            StartTimer();
-        }
-    }
-
-    public void StartTimer()
-    {
-        spawnUFOTimer = 10 + Random.Range(0, 20);
     }
 
     private async void KillPlayer()

@@ -30,10 +30,6 @@ public class Enemy : MonoBehaviour
                 Destroy(col.gameObject);
             }
         }
-        if (layer == LayerMask.NameToLayer("Walls"))
-        {
-            enemyParent.ChangeDirection();
-        }
     }
 
     /// <summary>
@@ -46,9 +42,9 @@ public class Enemy : MonoBehaviour
 
         GameManager.Instance.AddScore(points);
 
-        enemyParent.ShipDestroyed();
-
         Destroy(gameObject);
+
+        enemyParent.ShipDestroyed();
     }
 
     public void FireProjectile()

@@ -553,6 +553,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358515281}
   m_CullTransparentMesh: 0
+--- !u!1001 &483738057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6429144815016932543, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_Name
+      value: UFO
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1607790028059189810, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 06234c43cbccf7f41b3a7ca72b347d35, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,9 +1053,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  ufoPrefab: {fileID: 6429144815016932543, guid: 06234c43cbccf7f41b3a7ca72b347d35,
-    type: 3}
   isGamePaused: 0
+  enemySpeedIncrease: 0
+  enemyFireRateDecrease: 0
 --- !u!4 &966664505
 Transform:
   m_ObjectHideFlags: 0
@@ -2047,6 +2116,31 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 966664503}
+    - target: {fileID: 6753593609959528951, guid: 6fa9e508505cde943b1ad1e034f3ecf3,
+        type: 3}
+      propertyPath: speedAddOnKill
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753593609959528951, guid: 6fa9e508505cde943b1ad1e034f3ecf3,
+        type: 3}
+      propertyPath: timerSubtractOnKill
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753593609959528951, guid: 6fa9e508505cde943b1ad1e034f3ecf3,
+        type: 3}
+      propertyPath: timer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753593609959528951, guid: 6fa9e508505cde943b1ad1e034f3ecf3,
+        type: 3}
+      propertyPath: speedAdd
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753593609959528951, guid: 6fa9e508505cde943b1ad1e034f3ecf3,
+        type: 3}
+      propertyPath: timerSubtract
+      value: 0.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fa9e508505cde943b1ad1e034f3ecf3, type: 3}
 --- !u!1001 &3226300492423007592
