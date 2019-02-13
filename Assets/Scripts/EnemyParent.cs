@@ -11,7 +11,7 @@ public class EnemyParent : MonoBehaviour
     bool movingRight;
     bool hitWall = false;
     public float speed;
-    float shootingTimer;
+    float shootingTimer, timerBase;
     public GameObject enemyType1, enemyType2, enemyType3, gameManager;
     int min, max, enemiesLeft, level;
 
@@ -32,6 +32,7 @@ public class EnemyParent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timerBase = 1.0f;
         StartTimer();
     }
 
@@ -52,6 +53,7 @@ public class EnemyParent : MonoBehaviour
             ShootProjectile();
             StartTimer();
             speed += 0.05f;
+            timerBase -= .005f;
         }
         if (enemiesLeft == 0)
         {
@@ -90,7 +92,7 @@ public class EnemyParent : MonoBehaviour
 
     public void StartTimer()
     {
-        shootingTimer = 1.0f + Random.Range(0.0f, 1.0f);
+        shootingTimer = timerBase + Random.Range(0.0f, 1.0f);
     }
 
     public void ShootProjectile()
