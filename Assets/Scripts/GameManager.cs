@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
 
     private int score;
     private int lives;
+
     float spawnUFOTimer = 10.0f;
+
     [System.NonSerialized]
     public Player player;
 
@@ -38,11 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Player.Instance.PlayerDeath.AddListener(KillPlayer);
-        GameObject.FindGameObjectWithTag("EnemyParentObject").GetComponent<UnityEvent>().AddListener(GameOver); //calling this function returns null and prevents ResetScoreAndLives() from running. The Debug log says it isn't referencing an instance of the object and is thus
-                                                                                                                //a null reference
-                                                                                                                //if I try changing EnemyParent to an Instance, it no longer causes a null, but the gameOverEvent still doesn't function properly
-
+        player.playerDeathEvent.AddListener(KillPlayer);
         ResetScoreAndLives();
     }
 
@@ -73,15 +71,14 @@ public class GameManager : MonoBehaviour
         spawnUFOTimer = 10 + Random.Range(0, 20);
     }
 
-
-    private void KillPlayer()
+    private async void KillPlayer()
     {
         lives--;
 
         inGameCanvas.SetPlayerLifeCount(lives);
 
         // Wait for player death anim time before deciding game over
-        Task.Delay(player.deathPauseTimeMs);
+        await Task.Delay(player.deathPauseTimeMs);
 
         if(lives == 0)
         {
