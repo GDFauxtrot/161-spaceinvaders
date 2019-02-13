@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -71,17 +72,24 @@ public class GameManager : MonoBehaviour
     {
         spawnUFOTimer = 10 + Random.Range(0, 20);
     }
-    public void KillPlayer()
+
+
+    private void KillPlayer()
     {
-        Debug.Log("Player ded");
         lives--;
+
+        inGameCanvas.SetPlayerLifeCount(lives);
+
+        // Wait for player death anim time before deciding game over
+        Task.Delay(player.deathPauseTimeMs);
+
         if(lives == 0)
         {
             GameOver();
-        } 
+        }
     }
 
-    void GameOver()
+    public void GameOver()
     {
         gameOverEvent.Invoke();
     }
@@ -98,6 +106,16 @@ public class GameManager : MonoBehaviour
     {
         lives++;
         inGameCanvas.SetPlayerLifeCount(lives);
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public int GetLives()
+    {
+        return lives;
     }
 
     public void AddScore(int newPoints)

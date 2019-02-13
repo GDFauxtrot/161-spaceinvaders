@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3226300493282413260}
   - component: {fileID: 3226300493282413263}
   - component: {fileID: 3226300493282413248}
+  - component: {fileID: 6590830145892669557}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -94,11 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dc72bef05b55d4cbbae7cc6ccfe3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathPauseTimeMs: 1500
+  deathPauseInvisibleMs: 500
   speed: 4
   projectilePrefab: {fileID: 1258319226415349151, guid: ca0273d5caf5d7b468b96c5d8328cce4,
     type: 3}
   rigidbody: {fileID: 3226300493282413263}
-  PlayerDeath:
+  playerDeathEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -150,3 +153,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8125, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &6590830145892669557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226300493282413259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575049b47d6a38a4ba0b1d2abdb2a7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 1567ab1eb52aa9346bcabc96d9c93e74, type: 3}
+  - {fileID: 21300000, guid: 440e3d8bdf5bd8947827bcfa2454bf99, type: 3}
+  useCoroutine: 0
+  coroutineTimer: 0.02

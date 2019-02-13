@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using System.Threading.Tasks;
 
 public class EnemyParent : MonoBehaviour
 {
@@ -29,14 +29,13 @@ public class EnemyParent : MonoBehaviour
         animCoroutine = StartCoroutine(AnimMovingCoroutine());
     }
 
-    // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
         timerBase = 1.0f;
         StartTimer();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -62,10 +61,32 @@ public class EnemyParent : MonoBehaviour
             GameManager currManager = gameManager.GetComponent<GameManager>();
             currManager.AddPlayerLife();
         }
+    }
 
+    async void OnPlayerDeath()
+    {
+        // Stop enemies, wait for player death anim time, then resume (or destroy if game over)
+        float spdPrev = speed;
+        speed = 0;
+        
+        StopCoroutine(animCoroutine);
+        
+        shootingTimer = 999;
 
+        await Task.Delay(GameManager.Instance.player.deathPauseTimeMs);
 
+        if (GameManager.Instance.GetLives() > 0)
+        {
+            speed = spdPrev;
 
+            animCoroutine = StartCoroutine(AnimMovingCoroutine());
+
+            StartTimer();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator AnimMovingCoroutine()
@@ -80,7 +101,7 @@ public class EnemyParent : MonoBehaviour
 
                 goAnim.CycleAnimation();
             }
-            yield return new WaitForSeconds(0.5f / (speed <= 0 ? 0.0000001f : speed));
+            yield return new WaitForSeconds(0.5f / (speed <= 0 ? 0.000001f : speed));
         }
     }
 
@@ -99,8 +120,8 @@ public class EnemyParent : MonoBehaviour
     public void ShootProjectile()
     {
         GameObject bottomEnemy = null;
-        int column = Random.Range(min, max + 1);
-        for (int y = 0; y< 5; ++y)
+        int column = Random.Range(min, max);
+        for (int y = 0; y < 5; ++y)
         {
             if (enemies[column, y])
                 bottomEnemy = enemies[column, y];

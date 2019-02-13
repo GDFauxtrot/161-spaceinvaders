@@ -24,7 +24,7 @@ public class InGameCanvas : MonoBehaviour
         // Clear existing children
         foreach (Transform child in livesGrid.transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
         // Add new children count (grid will auto place them yay)
         for (int i = 0; i < count; ++i)

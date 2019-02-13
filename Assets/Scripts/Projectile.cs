@@ -9,6 +9,11 @@ public class Projectile : MonoBehaviour
     public bool isEnemyProjectile;
     public float speed;
 
+    void Start()
+    {
+        GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
+    }
+
     void Update()
     {
         int direction = isEnemyProjectile ? -1 : 1;
@@ -22,5 +27,10 @@ public class Projectile : MonoBehaviour
             Player player = GameManager.Instance.player;
             player.EnableFire();
         }
+    }
+
+    void OnPlayerDeath()
+    {
+        Destroy(gameObject);
     }
 }
