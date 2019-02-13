@@ -122,6 +122,9 @@ public class EnemyParent : MonoBehaviour
             Destroy(enemy);
         }
         level += 1;
+        this.transform.position = new Vector3(0, 2 - level * .1f, 0);
+        speed = 0.5f;
+        timerBase = 1.0f;
         for(int y = 0; y < 5; ++y)
         {
             for (int x = 0; x < 11; ++x)
@@ -131,7 +134,7 @@ public class EnemyParent : MonoBehaviour
 
                 enemy.transform.SetParent(gameObject.transform);
 
-                enemy.transform.localPosition = new Vector3(x - 5, 2 - (y + level *.1f), 0);
+                enemy.transform.localPosition = new Vector3(x - 5, 2 - y, 0);
 
                 enemies[x, y] = enemy;
             }
