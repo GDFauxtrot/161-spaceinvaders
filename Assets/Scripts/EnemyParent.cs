@@ -46,6 +46,7 @@ public class EnemyParent : MonoBehaviour
             dir = dir + Vector2.down*3;
             hitWall = false;
         }
+
         rigidbody.MovePosition(transform.position + (Vector3)(speed * dir * Time.deltaTime));
         shootingTimer -= Time.deltaTime;
         if (shootingTimer <= 0)

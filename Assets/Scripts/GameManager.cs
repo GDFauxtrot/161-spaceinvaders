@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent gameOverEvent;
 
+    public GameObject ufoPrefab;
+
     private int score;
     private int lives;
-
+    float spawnUFOTimer = 10.0f;
     [System.NonSerialized]
     public Player player;
 
@@ -37,13 +39,38 @@ public class GameManager : MonoBehaviour
     {
         Player.Instance.PlayerDeath.AddListener(KillPlayer);
         GameObject.FindGameObjectWithTag("EnemyParentObject").GetComponent<UnityEvent>().AddListener(GameOver); //calling this function returns null and prevents ResetScoreAndLives() from running. The Debug log says it isn't referencing an instance of the object and is thus
-                                                                                                                    //a null reference
-                                                                                                                    //if I try changing EnemyParent to an Instance, it no longer causes a null, but the gameOverEvent still doesn't function properly
-        
+                                                                                                                //a null reference
+                                                                                                                //if I try changing EnemyParent to an Instance, it no longer causes a null, but the gameOverEvent still doesn't function properly
 
         ResetScoreAndLives();
     }
 
+    void Update()
+    {
+        spawnUFOTimer -= Time.deltaTime;
+        if (spawnUFOTimer <= 0)
+        {
+            GameObject oneUFO = Instantiate(ufoPrefab);
+            UFO ufoScript = oneUFO.GetComponent<UFO>();
+            int direction = Random.Range(0, 1);
+            if (direction == 0)
+            {
+                oneUFO.transform.position = new Vector3(8.5f, 5.0f, 0);
+                ufoScript.SetDirection(false);
+            }
+            else
+            {
+                oneUFO.transform.position = new Vector3(-8.5f, 5.0f, 0);
+                ufoScript.SetDirection(true);
+            }
+            StartTimer();
+        }
+    }
+
+    public void StartTimer()
+    {
+        spawnUFOTimer = 10 + Random.Range(0, 20);
+    }
     public void KillPlayer()
     {
         Debug.Log("Player ded");

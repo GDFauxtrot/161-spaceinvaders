@@ -984,6 +984,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  ufoPrefab: {fileID: 6429144815016932543, guid: 06234c43cbccf7f41b3a7ca72b347d35,
+    type: 3}
   isGamePaused: 0
 --- !u!4 &966664505
 Transform:
