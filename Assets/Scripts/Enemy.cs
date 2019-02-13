@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject explosionPrefab;
+    public GameObject projectilePrefab;
 
     public int points;
 
@@ -29,6 +30,10 @@ public class Enemy : MonoBehaviour
                 Destroy(col.gameObject);
             }
         }
+        if (layer == LayerMask.NameToLayer("Walls"))
+        {
+            enemyParent.ChangeDirection();
+        }
     }
 
     /// <summary>
@@ -44,5 +49,12 @@ public class Enemy : MonoBehaviour
         enemyParent.ShipDestroyed();
 
         Destroy(gameObject);
+    }
+
+    public void FireProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(projectile.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>());
+
     }
 }

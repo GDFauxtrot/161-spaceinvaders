@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class GameOver : MonoBehaviour
 {
@@ -10,16 +11,21 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.Instance.gameOverEvent.AddListener(setGameOver);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isGameOver)
+        if (isGameOver)
         {
             gameOverPanel.SetActive(true);
         }
+    }
+
+    private void setGameOver()
+    {
+        isGameOver = true;
     }
 
     public void GoToMainMenu()
@@ -29,6 +35,6 @@ public class GameOver : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("JoeScene"); //change on the final push
+        SceneManager.LoadScene("GameScene"); //change on the final push
     }
 }
