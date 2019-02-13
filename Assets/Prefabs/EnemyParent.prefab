@@ -54,6 +54,11 @@ MonoBehaviour:
     type: 3}
   enemyType3: {fileID: 2899882891569751495, guid: 52ef93963d0179846acc76556b5dd198,
     type: 3}
+  EnemiesAtBottomWall:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!61 &2421561081244058842
 BoxCollider2D:
   m_ObjectHideFlags: 0

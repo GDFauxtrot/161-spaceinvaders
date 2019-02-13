@@ -12,6 +12,8 @@ public class Animatey : MonoBehaviour
     int currentAnimIndex;
     SpriteRenderer sprRenderer;
 
+    Coroutine animCoroutine;
+
     void Awake()
     {
         sprRenderer = GetComponent<SpriteRenderer>();
@@ -24,11 +26,11 @@ public class Animatey : MonoBehaviour
             sprRenderer = gameObject.AddComponent<SpriteRenderer>();
         }
 
-        SetFrame(0);
+        // SetFrame(0);
 
         if (useCoroutine)
         {
-            StartCoroutine(AnimCoroutine());
+            animCoroutine = StartCoroutine(AnimCoroutine());
         }
     }
 
@@ -54,6 +56,22 @@ public class Animatey : MonoBehaviour
     }
 
     /// <summary>
+    /// Resets the animation coroutine, if it needs to be reset or gets stuck
+    /// </summary>
+    public void ResetCoroutine()
+    {
+        if (animCoroutine != null)
+        {
+            StopCoroutine(animCoroutine);
+            animCoroutine = null;
+        }
+        if (useCoroutine)
+        {
+            animCoroutine = StartCoroutine(AnimCoroutine());
+        }
+    }
+
+    /// <summary>
     /// Internal function for setting the frame that is shown.
     /// </summary>
     private void SetFrame(int frameIndex)
@@ -68,7 +86,7 @@ public class Animatey : MonoBehaviour
 
         while (true)
         {
-            float coroutineTime = coroutineTimer <= 0 ? 1 : coroutineTimer;
+            float coroutineTime = coroutineTimer <= 0 ? 0.00001f : coroutineTimer;
 
             if (!useCoroutine)
             {

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1258319226415349148}
   isEnemyProjectile: 1
-  speed: 12
+  speed: 8
 --- !u!212 &1258319226415349138
 SpriteRenderer:
   m_ObjectHideFlags: 0
