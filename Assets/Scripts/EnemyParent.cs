@@ -11,9 +11,9 @@ public class EnemyParent : MonoBehaviour
     bool movingRight;
     bool hitWall = false;
     public float speed;
-    float shootingTimer;
-    public GameObject enemyType1, enemyType2, enemyType3;
-    int min, max, enemiesLeft;
+    float shootingTimer, timerBase;
+    public GameObject enemyType1, enemyType2, enemyType3, gameManager;
+    int min, max, enemiesLeft, level;
 
     GameObject[,] enemies = new GameObject[11, 5];
 
@@ -32,6 +32,7 @@ public class EnemyParent : MonoBehaviour
     void Start()
     {
         GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
+        timerBase = 1.0f;
         StartTimer();
     }
 
@@ -50,6 +51,14 @@ public class EnemyParent : MonoBehaviour
         {
             ShootProjectile();
             StartTimer();
+            speed += 0.05f;
+            timerBase -= .005f;
+        }
+        if (enemiesLeft == 0)
+        {
+            PopulateEnemies();
+            GameManager currManager = gameManager.GetComponent<GameManager>();
+            currManager.AddPlayerLife();
         }
     }
 
@@ -104,7 +113,7 @@ public class EnemyParent : MonoBehaviour
 
     public void StartTimer()
     {
-        shootingTimer = 1.0f + Random.Range(0.0f, 1.0f);
+        shootingTimer = timerBase + Random.Range(0.0f, 1.0f);
     }
 
     public void ShootProjectile()
@@ -133,7 +142,10 @@ public class EnemyParent : MonoBehaviour
         {
             Destroy(enemy);
         }
-        
+        level += 1;
+        this.transform.position = new Vector3(0, 2 - level * .1f, 0);
+        speed = 0.5f;
+        timerBase = 1.0f;
         for(int y = 0; y < 5; ++y)
         {
             for (int x = 0; x < 11; ++x)
