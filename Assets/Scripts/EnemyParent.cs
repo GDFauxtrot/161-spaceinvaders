@@ -45,6 +45,7 @@ public class EnemyParent : MonoBehaviour
     void Start()
     {
         GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
+        GameManager.Instance.gameOverEvent.AddListener(OnGameOver);
         StartTimer();
     }
 
@@ -211,9 +212,10 @@ public class EnemyParent : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-    private void OnTriggerEnter2D(Collider2D col)
+
+    void OnGameOver()
     {
-        
+        Destroy(gameObject);
     }
 
     /// <summary>

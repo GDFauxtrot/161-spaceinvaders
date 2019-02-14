@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerDeathEvent.AddListener(OnPlayerDeath);
+        GameManager.Instance.gameOverEvent.AddListener(OnGameOver);
     }
 
     void Update()
@@ -88,6 +89,12 @@ public class Player : MonoBehaviour
         {
             canFire = true;
         }
+    }
+
+    void OnGameOver()
+    {
+        isDead = true;
+        GetComponent<SpriteRenderer>().sprite = null;
     }
 
     async void OnPlayerDeath()

@@ -35,7 +35,8 @@ public class GameOver : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("GameScene"); //change on the final push
+        Destroy(GameManager.Instance.gameObject);
+        SceneManager.LoadScene("GameScene");
     }
 
     public void QuitGame()
