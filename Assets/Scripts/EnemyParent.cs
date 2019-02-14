@@ -26,7 +26,7 @@ public class EnemyParent : MonoBehaviour
 
     Coroutine animCoroutine;
 
-    public UnityEvent EnemiesAtBottomWall;
+    // public UnityEvent EnemiesAtBottomWall;
 
     public bool debugKillThemAll;
 
@@ -205,13 +205,15 @@ public class EnemyParent : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y - yMovementWallHit, transform.position.z);
             ChangeDirection();
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("BottomWall"))
+
+        if(col.gameObject.layer == LayerMask.NameToLayer("BottomWall"))
         {
-            EnemiesAtBottomWall.Invoke();
+            GameManager.Instance.GameOver();
         }
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        
     }
 
     /// <summary>
@@ -229,7 +231,6 @@ public class EnemyParent : MonoBehaviour
 
         Bounds newBounds = new Bounds();
 
-        Vector2 min, max;
         foreach (GameObject enemy in enemies)
         {
             if (enemy)
@@ -240,9 +241,5 @@ public class EnemyParent : MonoBehaviour
 
         GetComponent<BoxCollider2D>().offset = newBounds.center - transform.position;
         GetComponent<BoxCollider2D>().size = newBounds.size;
-
-
-        // Calculate new box in case a column has been destroyed
-        //
     }
 }

@@ -100,8 +100,6 @@ public class UFO : MonoBehaviour
 
     public void DestroyShip()
     {
-        Debug.Log("Destroyed!");
-
         if (explosionPrefab)
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
