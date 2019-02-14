@@ -197,6 +197,8 @@ public class EnemyParent : MonoBehaviour
         min = 0;
         max = 11;
         enemiesLeft = 55;
+
+        ResizeBounds();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -223,13 +225,21 @@ public class EnemyParent : MonoBehaviour
     /// </summary>
     public async void ShipDestroyed()
     {
-        // JANK FIX - wait a frame before resizing and whatnot
-        await Task.Delay((int)(Time.deltaTime * 1000));
-
         enemiesLeft--;
 
         speed += speedAddOnKill;
         timer -= timerSubtractOnKill;
+
+        if (enemiesLeft > 0)
+        {
+            ResizeBounds();
+        }
+    }
+
+    async void ResizeBounds()
+    {
+        // JANK FIX - wait a frame before resizing
+        await Task.Delay((int)(Time.deltaTime * 1000));
 
         Bounds newBounds = new Bounds();
 

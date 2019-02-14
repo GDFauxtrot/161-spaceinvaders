@@ -18,6 +18,7 @@ public class UFO : MonoBehaviour
     void Start()
     {
         GameManager.Instance.player.playerDeathEvent.AddListener(OnPlayerDeath);
+        GameManager.Instance.gameOverEvent.AddListener(OnGameOver);
         StartTimer();
     }
 
@@ -85,6 +86,11 @@ public class UFO : MonoBehaviour
             movingDir = 0;
             transform.position = new Vector3(0, 10, 0);
         }
+    }
+
+    void OnGameOver()
+    {
+        Destroy(gameObject);
     }
 
     async void OnPlayerDeath()
