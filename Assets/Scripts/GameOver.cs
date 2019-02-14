@@ -37,4 +37,9 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene"); //change on the final push
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

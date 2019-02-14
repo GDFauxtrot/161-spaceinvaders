@@ -390,6 +390,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isGamePaused: 0
+  enemySpeedIncrease: 0
+  enemyFireRateDecrease: 0
 --- !u!4 &429663232
 Transform:
   m_ObjectHideFlags: 0
@@ -1842,7 +1844,7 @@ GameObject:
   - component: {fileID: 1719044779}
   - component: {fileID: 1719044778}
   m_Layer: 5
-  m_Name: UI Canvas
+  m_Name: GameOver Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
