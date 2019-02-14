@@ -30,10 +30,8 @@ public class GameOver : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Destroy(GameObject.FindGameObjectWithTag("GameManager"));
+        Destroy(GameManager.Instance.gameObject);
         SceneManager.LoadScene("MainMenuScene");
-        
-
     }
 
     public void RestartGame()
